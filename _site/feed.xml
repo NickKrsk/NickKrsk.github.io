@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-01-29T17:14:50+07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Мои заметки</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Курс «JS: Автоматическое тестирование», заметки</title><link href="http://localhost:4000/programming/2020/01/29/js-testing.html" rel="alternate" type="text/html" title=" Курс «JS: Автоматическое тестирование», заметки" /><published>2020-01-29T12:55:20+07:00</published><updated>2020-01-29T12:55:20+07:00</updated><id>http://localhost:4000/programming/2020/01/29/js-testing</id><content type="html" xml:base="http://localhost:4000/programming/2020/01/29/js-testing.html">&lt;p&gt;У обычных утверждений есть мощная альтернатива: &lt;a href=&quot;https://github.com/power-assert-js/power-assert&quot;&gt;power-assert&lt;/a&gt;. Эта библиотека добавляет магию в привычный инструмент.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Jest - фраймворк для запуска тестов&lt;/strong&gt;
+Матчеры Jest: &lt;a href=&quot;https://jestjs.io/docs/ru/expect&quot;&gt;Документация&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;функция test не запускает тест на выполнение. Она добавляет его во внутрь Jest, а вот он уже решает, когда выполнить этот тест. Поэтому между загрузкой модуля и отработкой тестов проходит неопределённое время.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;import assert from ‘power-assert’;&lt;/p&gt;
+
+&lt;p&gt;// Весь код остаётся тем же самым
+const user = {
+  name: ‘Madonna’,
+  friends: [‘Kate’, ‘Michel’],
+  email: ‘madonna@example.com’,
+};&lt;/p&gt;
+
+&lt;p&gt;// Интерфейс библиотеки power-assert на 100% совместим со встроенным модулем assert.
+assert(user.name === ‘Michel’);
+И посмотреть вывод:&lt;/p&gt;
+
+&lt;p&gt;AssertionError [ERR_ASSERTION]:   # test.js:10&lt;/p&gt;
+
+&lt;p&gt;assert(user.name === ‘Michel’)
+         |    |    |
+         |    |    false
+         |    “Madonna”
+         Object{name:”Madonna”,friends:#Array#,email:”madonna@example.com”}&lt;/p&gt;
+
+&lt;p&gt;— [string] ‘Michel’
+  +++ [string] user.name
+  @@ -1,6 +1,7 @@
+   M
+  -ichel
+  +adonna&lt;/p&gt;
+
+&lt;p&gt;Прочее:
+  &lt;a href=&quot;https://habr.com/ru/post/258739/&quot;&gt;Приложение двенадцати факторов&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://guides.hexlet.io/check-list-of-engineering-practices/&quot;&gt;Чек-лист хороших инженерных практик в компаниях&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">У обычных утверждений есть мощная альтернатива: power-assert. Эта библиотека добавляет магию в привычный инструмент.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/1.jpg" /></entry><entry><title type="html">Jest</title><link href="http://localhost:4000/2020/01/20/jest.html" rel="alternate" type="text/html" title="Jest" /><published>2020-01-20T00:00:00+07:00</published><updated>2020-01-20T00:00:00+07:00</updated><id>http://localhost:4000/2020/01/20/jest</id><content type="html" xml:base="http://localhost:4000/2020/01/20/jest.html">&lt;p&gt;Jest
+Когда тестов и файлов с тестами становится много, возникают новые вопросы. Как группировать тесты? Как запустить на выполнение все тесты из одной директории? Если их очень много и они долгие, можно ли запустить их параллельно?&lt;/p&gt;
+
+&lt;p&gt;Для решения этих вопросов используют специальные тестовые фреймворки. Они помогают организовать структуру тестов и дают много полезного, например, удобный вывод. С большинством из этих возможностей мы познакомимся далее по курсу. В JavaScript мире наиболее популярен фреймворк Jest, разрабатываемый компанией Facebook. К слову, с помощью него мы тестируем все практики на Хекслете.&lt;/p&gt;
+
+&lt;p&gt;Ниже находится инструкция, в которой мы создадим с нуля npm-проект и добавим в него тесты.&lt;/p&gt;
+
+&lt;p&gt;Настройка и запуск
+Создайте где-нибудь на вашем компьютере директорию с названием hexlet-jest. Зайдите в неё и выполните команду:&lt;/p&gt;
+
+&lt;p&gt;hexlet-jest $ npm init
+Ответьте на все вопросы запущенного скрипта инициализации проекта. Убедитесь, что в корне проекта появился файл package.json.&lt;/p&gt;
+
+&lt;p&gt;Теперь добавим немного исходного кода. Создайте файл src/index.js с таким содержимым:&lt;/p&gt;
+
+&lt;p&gt;// Эта функция переворачивает переданную строку
+export default str =&amp;gt; str.split(‘’).reverse().join(‘’);
+Jest — обычный npm-пакет, который локально подключается в разрабатываемый проект. Jest нужен только во время разработки, поэтому лучше установить его в секцию devDependencies:&lt;/p&gt;
+
+&lt;h1 id=&quot;в-директории-с-проектом&quot;&gt;В директории с проектом&lt;/h1&gt;
+&lt;p&gt;hexlet-jest $ npm i –save-dev jest
+По умолчанию Jest не использует Babel, поэтому код с импортами внутри Jest не заработает. Для поддержки Babel нужно установить несколько дополнительных пакетов:&lt;/p&gt;
+
+&lt;p&gt;hexlet-jest $ npm i –save-dev babel-jest @babel/core @babel/preset-env
+Далее создайте в корне проекта файл babel.config.js с таким содержимым:&lt;/p&gt;
+
+&lt;p&gt;module.exports = {
+  presets: [[‘@babel/preset-env’, {targets: {node: ‘current’}}]],
+};
+После установки этих пакетов и настройки babel.config.js (подробнее в нашем курсе JS: Настройка окружения), Jest начнёт использовать Babel при запуске тестов. Никакая конфигурация больше не требуется.&lt;/p&gt;
+
+&lt;p&gt;Jest ожидает, что тесты находятся в директории &lt;strong&gt;tests&lt;/strong&gt;, которую обычно располагают в корне проекта. Внутри этого каталога, можно создавать любую структуру, Jest найдёт все тесты, которые там лежат. Именование файлов с тестами должно быть таким: &lt;name&gt;.test.js. Где &lt;name&gt;, как правило, соответствует имени модуля, который тестируется.&lt;/name&gt;&lt;/name&gt;&lt;/p&gt;
+
+&lt;p&gt;Напишем наш первый тест. Создайте файл &lt;strong&gt;tests&lt;/strong&gt;/index.test.js со следующими содержимым:&lt;/p&gt;
+
+&lt;p&gt;import reverse from ‘../src’;&lt;/p&gt;
+
+&lt;p&gt;test(‘reverse’, () =&amp;gt; {
+  expect(reverse(‘hello’)).toEqual(‘olleh’);
+  expect(reverse(‘’)).toEqual(‘’);
+});
+Далее мы разберём структуру этого файла, а пока попробуем запустить тест на выполнение:&lt;/p&gt;
+
+&lt;p&gt;hexlet-jest $ npx jest
+ PASS  &lt;strong&gt;tests&lt;/strong&gt;/index.test.js
+  ✓ reverse (11ms)&lt;/p&gt;
+
+&lt;p&gt;Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        1.166s
+Ran all test suites.
+Ура! Тесты прошли успешно.&lt;/p&gt;
+
+&lt;p&gt;Структура
+Давайте ещё раз посмотрим на файл с тестом:&lt;/p&gt;
+
+&lt;p&gt;import reverse from ‘../src’;&lt;/p&gt;
+
+&lt;p&gt;test(‘reverse’, () =&amp;gt; {
+  const str = ‘hello’;
+  expect(reverse(str)).toEqual(‘olleh’);
+  expect(reverse(‘’)).toEqual(‘’);
+})
+Для тестов Jest предоставляет две глобальные функции: test и expect. Они доступны без какого-либо импорта, так как Jest делает их глобальными функциями.&lt;/p&gt;
+
+&lt;p&gt;Функция test нужна для описания конкретного теста и его проверок. Самих тестовых функций может быть любое количество. Первым параметром эта функция принимает произвольную строчку, которая должна описывать сам тест. Эта строчка потом отображается на экране во время запуска тестов для упрощения отладки.&lt;/p&gt;
+
+&lt;p&gt;hexlet-jest $ npx jest
+ PASS  &lt;strong&gt;tests&lt;/strong&gt;/index.test.js
+  ✓ reverse (11ms) # название теста
+Второй параметр — функция, внутри которой описан проверочный код. Обратите внимание на то, что этот код не выполняется сразу. Функция test добавляет его внутри Jest, который уже решает как и когда запускать тесты. Это позволяет проводить различные оптимизации например, выполнять тесты параллельно.&lt;/p&gt;
+
+&lt;p&gt;Самое необычное в этом коде — проверки. Jest использует “матчеры” (matchers). Это утверждения, имеющие особую структуру, напоминающую обращение к объекту. Общий принцип работы матчеров такой:&lt;/p&gt;
+
+&lt;p&gt;Вызывается функция expect куда передаётся актуальное (фактическое) значение.
+На результате, возвращаемом функцией expect, вызывается подходящий матчер, например, toEqual.
+Матчеры позволяют читать текст, практически, как английский язык:&lt;/p&gt;
+
+&lt;p&gt;// Ожидается, что результат выражения reverse(‘hello’) равен ‘olleh’
+expect(reverse(‘hello’)).toEqual(‘olleh’);
+Подробнее о матчерах в следующем уроке.&lt;/p&gt;
+
+&lt;p&gt;Одна из приятнейших особенностей Jest — то, как он выводит сообщения о проваленных проверках. Попробуйте внести ошибку в исходную функцию и запустите тесты заново:&lt;/p&gt;
+
+&lt;p&gt;hexlet-jest$ npx jest
+ FAIL  &lt;strong&gt;tests&lt;/strong&gt;/index.test.js
+  ✕ reverse (9ms)&lt;/p&gt;
+
+&lt;p&gt;● reverse&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;expect(received).toEqual(expected) // Object.is equality
+
+Expected: &quot;olleh&quot;
+Received: &quot;o|l|l|e|h&quot;
+
+  3 | test('reverse', () =&amp;gt; {
+  4 |   const str = 'hello';
+&amp;gt; 5 |   expect(reverse(str)).toEqual('olleh');
+    |                        ^
+  6 | })
+  7 |
+
+  at Object.toEqual (__tests__/index.test.js:5:24)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        1.683s
+Ran all test suites.
+В этом выводе показаны не только ожидаемое и фактическое значение, но и исходный код файла с тестами с указанием на конкретную проверку. Это невероятная и очень полезная фишка, которая значительно ускоряет анализ результатов тестирования и помогает в отладке.&lt;/p&gt;
+
+&lt;p&gt;Самостоятельная работа
+Выполните все шаги из этого урока
+Залейте код на Гитхаб&lt;/p&gt;</content><author><name></name></author><summary type="html">Jest Когда тестов и файлов с тестами становится много, возникают новые вопросы. Как группировать тесты? Как запустить на выполнение все тесты из одной директории? Если их очень много и они долгие, можно ли запустить их параллельно?</summary></entry><entry><title type="html">Чистый код, Боб Мартин</title><link href="http://localhost:4000/programming/2019/07/17/Chystyi-cod.html" rel="alternate" type="text/html" title="Чистый код, Боб Мартин" /><published>2019-07-17T12:55:20+07:00</published><updated>2019-07-17T12:55:20+07:00</updated><id>http://localhost:4000/programming/2019/07/17/Chystyi-cod</id><content type="html" xml:base="http://localhost:4000/programming/2019/07/17/Chystyi-cod.html">&lt;p&gt;Мелочи важны. Повышенное внимание к мелочам характерно для великих творцов. Стихотворение никогда не бывает законченным.
+ Фальшивая монета всегда возвращается владельцу.&lt;/p&gt;
+
+&lt;p&gt;Качество возникает в результате миллиона проявлений небезразличия отношения к делу, а не от применения какого-то великого метода.&lt;/p&gt;
+
+&lt;p&gt;Функция должна выполнять только одну операцию, она должна выполнять ее хорошо и ничего другого делать не должна.&lt;/p&gt;
+
+&lt;p&gt;Один уровень абстракции на функцию&lt;/p&gt;
+
+&lt;p&gt;В идеальном случае количество аргументов функции равно 0. 
+ Аргументы-флаги уродливы 
+ Выходных аргументов следует избегать.
+ Концепции, связанные друг с другом, должны находиться поблизости друг от друга по вертикали в коде.&lt;/p&gt;
+
+&lt;p&gt;Объекты предоставляют поведение и скрывают данные 
+ Не возвращайте null&lt;/p&gt;
+
+&lt;p&gt;Принцип единой ответственности - класс или модуль должен иметь одну причину для изменения.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Используйте самое простое решение из всех возможных.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Чтобы написать чистый код, мы сначала пишем грязный код, а затем очищаем его.&lt;/p&gt;
+
+&lt;p&gt;Комментарии должны говорить то, что не скажет сам код.&lt;/p&gt;
+
+&lt;p&gt;Лучше иметь несколько функций, чем передавать функции признак для выбора поведения.&lt;/p&gt;
+
+&lt;p&gt;Длина имени должна соответствовать его области видимости.&lt;/p&gt;
+
+&lt;p&gt;Не используйте имена, передающие информацию о реализации. Имена должны отражать уровень абстракции, на котором работает класс или функция.&lt;/p&gt;
+
+&lt;p&gt;Легко писать код, понятный для нас самих, потому что в момент его написания мы глубоко понимаем решаемую проблему.
+ У других программистов, которые будут заниматься сопровождением этого кода, такого понимания не будет.&lt;/p&gt;
+
+&lt;p&gt;Длина имени должна быть связана с длиной его области видимости. 
+ Переменным с крошечной областью видимости можно присваивать очень короткие имена, но у переменных с большей областью видимости имена должны быть длинными. 
+ Таким образом, чем длиннее область видимости, тем более длинным и точным должно быть ее имя.&lt;/p&gt;
+
+&lt;p&gt;Все операторы в функции должны находиться на одном уровне абстракции, который должен быть на один уровень ниже операции, описываемой именем функции.&lt;/p&gt;
+
+&lt;p&gt;Изучение чужого кода – непростая задача. Интеграция чужого кода тоже сложна. Одновременное решение обоих задач создает двойственные сложности. 
+ А что, если пойти по другому пути? Вместо того, чтобы экспериментировать и опробовать новую библиотеку в коде продукта, можно написать тесты. Проверяющие наше понимание стороннего кода. 
+ Джим Ньюкирк (JimNewkirk) называет такие тесты «учебными тестами».&lt;/p&gt;</content><author><name></name></author><summary type="html">Мелочи важны. Повышенное внимание к мелочам характерно для великих творцов. Стихотворение никогда не бывает законченным. Фальшивая монета всегда возвращается владельцу. Качество возникает в результате миллиона проявлений небезразличия отношения к делу, а не от применения какого-то великого метода. Функция должна выполнять только одну операцию, она должна выполнять ее хорошо и ничего другого делать не должна. Один уровень абстракции на функцию В идеальном случае количество аргументов функции равно 0. Аргументы-флаги уродливы Выходных аргументов следует избегать. Концепции, связанные друг с другом, должны находиться поблизости друг от друга по вертикали в коде. Объекты предоставляют поведение и скрывают данные Не возвращайте null Принцип единой ответственности - класс или модуль должен иметь одну причину для изменения. Используйте самое простое решение из всех возможных. Чтобы написать чистый код, мы сначала пишем грязный код, а затем очищаем его. Комментарии должны говорить то, что не скажет сам код. Лучше иметь несколько функций, чем передавать функции признак для выбора поведения. Длина имени должна соответствовать его области видимости. Не используйте имена, передающие информацию о реализации. Имена должны отражать уровень абстракции, на котором работает класс или функция. Легко писать код, понятный для нас самих, потому что в момент его написания мы глубоко понимаем решаемую проблему. У других программистов, которые будут заниматься сопровождением этого кода, такого понимания не будет. Длина имени должна быть связана с длиной его области видимости. Переменным с крошечной областью видимости можно присваивать очень короткие имена, но у переменных с большей областью видимости имена должны быть длинными. Таким образом, чем длиннее область видимости, тем более длинным и точным должно быть ее имя. Все операторы в функции должны находиться на одном уровне абстракции, который должен быть на один уровень ниже операции, описываемой именем функции. Изучение чужого кода – непростая задача. Интеграция чужого кода тоже сложна. Одновременное решение обоих задач создает двойственные сложности. А что, если пойти по другому пути? Вместо того, чтобы экспериментировать и опробовать новую библиотеку в коде продукта, можно написать тесты. Проверяющие наше понимание стороннего кода. Джим Ньюкирк (JimNewkirk) называет такие тесты «учебными тестами».</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/1.jpg" /></entry><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/jekyll/update/2019/07/17/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2019-07-17T12:55:20+07:00</published><updated>2019-07-17T12:55:20+07:00</updated><id>http://localhost:4000/jekyll/update/2019/07/17/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2019/07/17/welcome-to-jekyll.html">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+
+&lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+
+&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom' to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Check out the &lt;a href=&quot;https://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.</summary></entry></feed>
