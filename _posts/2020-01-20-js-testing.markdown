@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  " Курс «JS: Автоматическое тестирование», заметки"
-date:   2019-07-17 12:55:20 +0700
+date:   2020-01-29 12:55:20 +0700
 categories: programming
 image: 1.jpg 
 ---
