@@ -1,42 +1,102 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-01-29T17:14:50+07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Мои заметки</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Курс «JS: Автоматическое тестирование», заметки</title><link href="http://localhost:4000/programming/2020/01/29/js-testing.html" rel="alternate" type="text/html" title=" Курс «JS: Автоматическое тестирование», заметки" /><published>2020-01-29T12:55:20+07:00</published><updated>2020-01-29T12:55:20+07:00</updated><id>http://localhost:4000/programming/2020/01/29/js-testing</id><content type="html" xml:base="http://localhost:4000/programming/2020/01/29/js-testing.html">&lt;p&gt;У обычных утверждений есть мощная альтернатива: &lt;a href=&quot;https://github.com/power-assert-js/power-assert&quot;&gt;power-assert&lt;/a&gt;. Эта библиотека добавляет магию в привычный инструмент.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-01-30T15:19:34+07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Мои заметки</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Курс «JS: Автоматическое тестирование», заметки</title><link href="http://localhost:4000/programming/2020/01/29/js-testing.html" rel="alternate" type="text/html" title=" Курс «JS: Автоматическое тестирование», заметки" /><published>2020-01-29T12:55:20+07:00</published><updated>2020-01-29T12:55:20+07:00</updated><id>http://localhost:4000/programming/2020/01/29/js-testing</id><content type="html" xml:base="http://localhost:4000/programming/2020/01/29/js-testing.html">&lt;p&gt;У обычных утверждений есть мощная альтернатива: &lt;a href=&quot;https://github.com/power-assert-js/power-assert&quot;&gt;power-assert&lt;/a&gt;. Эта библиотека добавляет магию в привычный инструмент.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Jest - фраймворк для запуска тестов&lt;/strong&gt;
-Матчеры Jest: &lt;a href=&quot;https://jestjs.io/docs/ru/expect&quot;&gt;Документация&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Jest - фраймворк для запуска тестов&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Матчеры Jest: &lt;a href=&quot;https://jestjs.io/docs/ru/expect&quot;&gt;Документация&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;функция test не запускает тест на выполнение. Она добавляет его во внутрь Jest, а вот он уже решает, когда выполнить этот тест. Поэтому между загрузкой модуля и отработкой тестов проходит неопределённое время.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;import assert from ‘power-assert’;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import assert from 'power-assert';
 
-&lt;p&gt;// Весь код остаётся тем же самым
+// Весь код остаётся тем же самым
 const user = {
-  name: ‘Madonna’,
-  friends: [‘Kate’, ‘Michel’],
-  email: ‘madonna@example.com’,
-};&lt;/p&gt;
+  name: 'Madonna',
+  friends: ['Kate', 'Michel'],
+  email: 'madonna@example.com',
+};
 
-&lt;p&gt;// Интерфейс библиотеки power-assert на 100% совместим со встроенным модулем assert.
-assert(user.name === ‘Michel’);
-И посмотреть вывод:&lt;/p&gt;
+// Интерфейс библиотеки power-assert на 100% совместим со встроенным модулем assert.
+assert(user.name === 'Michel');
+И посмотреть вывод:
 
-&lt;p&gt;AssertionError [ERR_ASSERTION]:   # test.js:10&lt;/p&gt;
+AssertionError [ERR_ASSERTION]:   # test.js:10
 
-&lt;p&gt;assert(user.name === ‘Michel’)
+  assert(user.name === 'Michel')
          |    |    |
          |    |    false
-         |    “Madonna”
-         Object{name:”Madonna”,friends:#Array#,email:”madonna@example.com”}&lt;/p&gt;
+         |    &quot;Madonna&quot;
+         Object{name:&quot;Madonna&quot;,friends:#Array#,email:&quot;madonna@example.com&quot;}
 
-&lt;p&gt;— [string] ‘Michel’
+  --- [string] 'Michel'
   +++ [string] user.name
   @@ -1,6 +1,7 @@
    M
   -ichel
-  +adonna&lt;/p&gt;
+  +adonna
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Прочее:
-  &lt;a href=&quot;https://habr.com/ru/post/258739/&quot;&gt;Приложение двенадцати факторов&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Хуки&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://guides.hexlet.io/check-list-of-engineering-practices/&quot;&gt;Чек-лист хороших инженерных практик в компаниях&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">У обычных утверждений есть мощная альтернатива: power-assert. Эта библиотека добавляет магию в привычный инструмент.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/1.jpg" /></entry><entry><title type="html">Jest</title><link href="http://localhost:4000/2020/01/20/jest.html" rel="alternate" type="text/html" title="Jest" /><published>2020-01-20T00:00:00+07:00</published><updated>2020-01-20T00:00:00+07:00</updated><id>http://localhost:4000/2020/01/20/jest</id><content type="html" xml:base="http://localhost:4000/2020/01/20/jest.html">&lt;p&gt;Jest
+&lt;p&gt;Тестовые фреймворки предоставляют хуки — специальные функции, которые запускаются до или после тестов. Ниже пример того, как создавать дату перед каждым тестом:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let now;
+let counter = 0;
+
+// Запускается перед каждым тестом
+beforeEach(() =&amp;gt; {
+  now = new Date();
+  counter += 1;
+});
+
+test('first example', () =&amp;gt; console.log(now, counter));
+test('second example', () =&amp;gt; console.log(now, counter));
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Плохие и хорошие практики тестирования&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Нет условным конструкциям внутри тестов. Любое ветвление внутри тестов это фактически несколько тестов в рамках одного теста. От этого надо избавляться и никогда так не писать.&lt;/li&gt;
+  &lt;li&gt;Исключать взаимное влияние тестов&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Так как же лучше написать тест? Нужно найти достаточно высокую точку входа в нашу программу, которая не зависит от внутренней реализации, и при этом выполняет поставленную задачу.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Покрытие кода тестами&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;В Jest покрытие меряется крайне просто. Достаточно запустить тесты с флагом –coverage:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nodejs-package$ npx jest --coverage
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Большинство разработчиков сходится во мнении, что 80% — это достаточно хорошее покрытие. На этом можно и остановиться.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Примеры тестов&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  test('Cart', () =&amp;gt; {
+  const cart = makeCart();
+  expect(cart.getItems()).toHaveLength(0);
+
+  cart.addItem({ name: 'car', price: 3 }, 5);
+  expect(cart.getItems()).toHaveLength(1);
+  expect(cart.getCost()).toBe(15);
+  expect(cart.getCount()).toBe(5);
+
+  cart.addItem({ name: 'house', price: 10 }, 2);
+  expect(cart.getItems()).toHaveLength(2);
+  expect(cart.getCost()).toBe(35);
+  expect(cart.getCount()).toBe(7);
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Прочее:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://habr.com/ru/post/258739/&quot;&gt;Приложение двенадцати факторов&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://guides.hexlet.io/check-list-of-engineering-practices/&quot;&gt;Чек-лист хороших инженерных практик в компаниях&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=zsz8kdi62mE&quot;&gt;Начинаем писать тесты правильно (видео)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ru.hexlet.io/blog/posts/how-to-test-code&quot;&gt;Начинаем писать тесты правильно (статья)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ru.hexlet.io/blog/posts/environment&quot;&gt;Среды разработки. Мужики, выкатывай!&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">У обычных утверждений есть мощная альтернатива: power-assert. Эта библиотека добавляет магию в привычный инструмент.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/1.jpg" /></entry><entry><title type="html">Jest</title><link href="http://localhost:4000/2020/01/20/jest.html" rel="alternate" type="text/html" title="Jest" /><published>2020-01-20T00:00:00+07:00</published><updated>2020-01-20T00:00:00+07:00</updated><id>http://localhost:4000/2020/01/20/jest</id><content type="html" xml:base="http://localhost:4000/2020/01/20/jest.html">&lt;p&gt;Jest
 Когда тестов и файлов с тестами становится много, возникают новые вопросы. Как группировать тесты? Как запустить на выполнение все тесты из одной директории? Если их очень много и они долгие, можно ли запустить их параллельно?&lt;/p&gt;
 
 &lt;p&gt;Для решения этих вопросов используют специальные тестовые фреймворки. Они помогают организовать структуру тестов и дают много полезного, например, удобный вывод. С большинством из этих возможностей мы познакомимся далее по курсу. В JavaScript мире наиболее популярен фреймворк Jest, разрабатываемый компанией Facebook. К слову, с помощью него мы тестируем все практики на Хекслете.&lt;/p&gt;

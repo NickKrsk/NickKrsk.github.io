@@ -48,43 +48,103 @@
   <div class="post-content e-content" itemprop="articleBody">
     <p>У обычных утверждений есть мощная альтернатива: <a href="https://github.com/power-assert-js/power-assert">power-assert</a>. Эта библиотека добавляет магию в привычный инструмент.</p>
 
-<p><strong>Jest - фраймворк для запуска тестов</strong>
-Матчеры Jest: <a href="https://jestjs.io/docs/ru/expect">Документация</a></p>
+<p><strong>Jest - фраймворк для запуска тестов</strong></p>
+
+<p>Матчеры Jest: <a href="https://jestjs.io/docs/ru/expect">Документация</a></p>
 
 <p><strong>функция test не запускает тест на выполнение. Она добавляет его во внутрь Jest, а вот он уже решает, когда выполнить этот тест. Поэтому между загрузкой модуля и отработкой тестов проходит неопределённое время.</strong></p>
 
-<p>import assert from ‘power-assert’;</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import assert from 'power-assert';
 
-<p>// Весь код остаётся тем же самым
+// Весь код остаётся тем же самым
 const user = {
-  name: ‘Madonna’,
-  friends: [‘Kate’, ‘Michel’],
-  email: ‘madonna@example.com’,
-};</p>
+  name: 'Madonna',
+  friends: ['Kate', 'Michel'],
+  email: 'madonna@example.com',
+};
 
-<p>// Интерфейс библиотеки power-assert на 100% совместим со встроенным модулем assert.
-assert(user.name === ‘Michel’);
-И посмотреть вывод:</p>
+// Интерфейс библиотеки power-assert на 100% совместим со встроенным модулем assert.
+assert(user.name === 'Michel');
+И посмотреть вывод:
 
-<p>AssertionError [ERR_ASSERTION]:   # test.js:10</p>
+AssertionError [ERR_ASSERTION]:   # test.js:10
 
-<p>assert(user.name === ‘Michel’)
+  assert(user.name === 'Michel')
          |    |    |
          |    |    false
-         |    “Madonna”
-         Object{name:”Madonna”,friends:#Array#,email:”madonna@example.com”}</p>
+         |    "Madonna"
+         Object{name:"Madonna",friends:#Array#,email:"madonna@example.com"}
 
-<p>— [string] ‘Michel’
+  --- [string] 'Michel'
   +++ [string] user.name
   @@ -1,6 +1,7 @@
    M
   -ichel
-  +adonna</p>
+  +adonna
+</code></pre></div></div>
 
-<p>Прочее:
-  <a href="https://habr.com/ru/post/258739/">Приложение двенадцати факторов</a></p>
+<p><strong>Хуки</strong></p>
+
+<p>Тестовые фреймворки предоставляют хуки — специальные функции, которые запускаются до или после тестов. Ниже пример того, как создавать дату перед каждым тестом:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let now;
+let counter = 0;
+
+// Запускается перед каждым тестом
+beforeEach(() =&gt; {
+  now = new Date();
+  counter += 1;
+});
+
+test('first example', () =&gt; console.log(now, counter));
+test('second example', () =&gt; console.log(now, counter));
+</code></pre></div></div>
+
+<p><strong>Плохие и хорошие практики тестирования</strong></p>
+
+<ol>
+  <li>Нет условным конструкциям внутри тестов. Любое ветвление внутри тестов это фактически несколько тестов в рамках одного теста. От этого надо избавляться и никогда так не писать.</li>
+  <li>Исключать взаимное влияние тестов</li>
+</ol>
+
+<p>Так как же лучше написать тест? Нужно найти достаточно высокую точку входа в нашу программу, которая не зависит от внутренней реализации, и при этом выполняет поставленную задачу.</p>
+
+<p><strong>Покрытие кода тестами</strong></p>
+
+<p>В Jest покрытие меряется крайне просто. Достаточно запустить тесты с флагом –coverage:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nodejs-package$ npx jest --coverage
+</code></pre></div></div>
+
+<p>Большинство разработчиков сходится во мнении, что 80% — это достаточно хорошее покрытие. На этом можно и остановиться.</p>
+
+<p><strong>Примеры тестов</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  test('Cart', () =&gt; {
+  const cart = makeCart();
+  expect(cart.getItems()).toHaveLength(0);
+
+  cart.addItem({ name: 'car', price: 3 }, 5);
+  expect(cart.getItems()).toHaveLength(1);
+  expect(cart.getCost()).toBe(15);
+  expect(cart.getCount()).toBe(5);
+
+  cart.addItem({ name: 'house', price: 10 }, 2);
+  expect(cart.getItems()).toHaveLength(2);
+  expect(cart.getCost()).toBe(35);
+  expect(cart.getCount()).toBe(7);
+});
+</code></pre></div></div>
+
+<p><strong>Прочее:</strong></p>
+
+<p><a href="https://habr.com/ru/post/258739/">Приложение двенадцати факторов</a></p>
 
 <p><a href="https://guides.hexlet.io/check-list-of-engineering-practices/">Чек-лист хороших инженерных практик в компаниях</a></p>
+
+<p><a href="https://www.youtube.com/watch?v=zsz8kdi62mE">Начинаем писать тесты правильно (видео)</a></p>
+
+<p><a href="https://ru.hexlet.io/blog/posts/how-to-test-code">Начинаем писать тесты правильно (статья)</a></p>
+
+<p><a href="https://ru.hexlet.io/blog/posts/environment">Среды разработки. Мужики, выкатывай!</a></p>
 
   </div><a class="u-url" href="/programming/2020/01/29/js-testing.html" hidden></a>
 </article>
