@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-25T16:21:00+07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Мои заметки</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">JS: Продвинутое тестирование, заметки</title><link href="http://localhost:4000/programming/2020/02/20/js-advanced-testing.html" rel="alternate" type="text/html" title=" JS: Продвинутое тестирование, заметки" /><published>2020-02-20T12:55:20+07:00</published><updated>2020-02-20T12:55:20+07:00</updated><id>http://localhost:4000/programming/2020/02/20/js-advanced-testing</id><content type="html" xml:base="http://localhost:4000/programming/2020/02/20/js-advanced-testing.html">&lt;p&gt;Метчер jest для отлова исключений:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-26T14:14:55+07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Мои заметки</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">JS: Продвинутое тестирование, заметки</title><link href="http://localhost:4000/programming/2020/02/20/js-advanced-testing.html" rel="alternate" type="text/html" title=" JS: Продвинутое тестирование, заметки" /><published>2020-02-20T12:55:20+07:00</published><updated>2020-02-20T12:55:20+07:00</updated><id>http://localhost:4000/programming/2020/02/20/js-advanced-testing</id><content type="html" xml:base="http://localhost:4000/programming/2020/02/20/js-advanced-testing.html">&lt;p&gt;Метчер jest для отлова исключений:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;test('boom!', () =&amp;gt; {
   expect(() =&amp;gt; {
@@ -50,7 +50,38 @@ test.each(formats)('%s', async (format) =&amp;gt; {
 
 &lt;p&gt;Любое взаимодействие с внешней средой не детерминировано.&lt;/p&gt;
 
-&lt;p&gt;Библиотека для создания виртуальной ФС: &lt;a href=&quot;https://github.com/tschaub/mock-fs&quot;&gt;mock-fs&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">Метчер jest для отлова исключений:</summary></entry><entry><title type="html">Курс «JS: Автоматическое тестирование», заметки</title><link href="http://localhost:4000/programming/2020/01/29/js-testing.html" rel="alternate" type="text/html" title=" Курс «JS: Автоматическое тестирование», заметки" /><published>2020-01-29T12:55:20+07:00</published><updated>2020-01-29T12:55:20+07:00</updated><id>http://localhost:4000/programming/2020/01/29/js-testing</id><content type="html" xml:base="http://localhost:4000/programming/2020/01/29/js-testing.html">&lt;p&gt;У обычных утверждений есть мощная альтернатива: &lt;a href=&quot;https://github.com/power-assert-js/power-assert&quot;&gt;power-assert&lt;/a&gt;. Эта библиотека добавляет магию в привычный инструмент.&lt;/p&gt;
+&lt;p&gt;Библиотека для создания виртуальной ФС: &lt;a href=&quot;https://github.com/tschaub/mock-fs&quot;&gt;mock-fs&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;инверсия-зависимостей&quot;&gt;Инверсия зависимостей&lt;/h1&gt;
+
+&lt;p&gt;(Инверсия зависимостей)[https://zen.yandex.ru/media/id/5b1d8642c71a92a91b9ea0ce/vnedrenie-zavisimostei-chto-eto-takoe-i-kak-rabotaet-5d5684d1a06eaf00ac3ad8cd]&lt;/p&gt;
+
+&lt;p&gt;Программу можно изменить так, чтобы она вызывала функцию sendEmail не напрямую, а принимала её как параметр:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import sendEmail from './emailSender.js';
+
+// Ставим значение по умолчанию, чтобы не пришлось постоянно указывать функцию
+const registerUser = (params, send = sendEmail) =&amp;gt; {
+  const user = new User(params);
+  if (user.save()) {
+    send('registration', { user });
+    return true;
+  }
+  return false;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Тест:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;const fakeSendEmail = (...args) =&amp;gt; {
+  /* Например письмо можно вывести в лог для удобства отладки */
+};
+
+test('registerUser', () =&amp;gt; {
+  const id = registerUser({ name: 'Mike' }, fakeSendEmail);
+  const user = User.find(id)
+  expect(user).toHaveProperty('name', 'Mike');
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Метчер jest для отлова исключений:</summary></entry><entry><title type="html">Курс «JS: Автоматическое тестирование», заметки</title><link href="http://localhost:4000/programming/2020/01/29/js-testing.html" rel="alternate" type="text/html" title=" Курс «JS: Автоматическое тестирование», заметки" /><published>2020-01-29T12:55:20+07:00</published><updated>2020-01-29T12:55:20+07:00</updated><id>http://localhost:4000/programming/2020/01/29/js-testing</id><content type="html" xml:base="http://localhost:4000/programming/2020/01/29/js-testing.html">&lt;p&gt;У обычных утверждений есть мощная альтернатива: &lt;a href=&quot;https://github.com/power-assert-js/power-assert&quot;&gt;power-assert&lt;/a&gt;. Эта библиотека добавляет магию в привычный инструмент.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Jest - фраймворк для запуска тестов&lt;/strong&gt;&lt;/p&gt;
 

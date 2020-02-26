@@ -62,3 +62,36 @@ test.each(formats)('%s', async (format) => {
 Любое взаимодействие с внешней средой не детерминировано.
 
 Библиотека для создания виртуальной ФС: [mock-fs](https://github.com/tschaub/mock-fs)
+
+# Инверсия зависимостей
+
+(Инверсия зависимостей)[https://zen.yandex.ru/media/id/5b1d8642c71a92a91b9ea0ce/vnedrenie-zavisimostei-chto-eto-takoe-i-kak-rabotaet-5d5684d1a06eaf00ac3ad8cd]
+
+Программу можно изменить так, чтобы она вызывала функцию sendEmail не напрямую, а принимала её как параметр:
+
+```
+import sendEmail from './emailSender.js';
+
+// Ставим значение по умолчанию, чтобы не пришлось постоянно указывать функцию
+const registerUser = (params, send = sendEmail) => {
+  const user = new User(params);
+  if (user.save()) {
+    send('registration', { user });
+    return true;
+  }
+  return false;
+}
+```
+
+Тест:
+```
+const fakeSendEmail = (...args) => {
+  /* Например письмо можно вывести в лог для удобства отладки */
+};
+
+test('registerUser', () => {
+  const id = registerUser({ name: 'Mike' }, fakeSendEmail);
+  const user = User.find(id)
+  expect(user).toHaveProperty('name', 'Mike');
+});
+```

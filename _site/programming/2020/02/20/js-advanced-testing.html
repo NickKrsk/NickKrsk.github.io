@@ -99,6 +99,37 @@ test.each(formats)('%s', async (format) =&gt; {
 
 <p>Библиотека для создания виртуальной ФС: <a href="https://github.com/tschaub/mock-fs">mock-fs</a></p>
 
+<h1 id="инверсия-зависимостей">Инверсия зависимостей</h1>
+
+<p>(Инверсия зависимостей)[https://zen.yandex.ru/media/id/5b1d8642c71a92a91b9ea0ce/vnedrenie-zavisimostei-chto-eto-takoe-i-kak-rabotaet-5d5684d1a06eaf00ac3ad8cd]</p>
+
+<p>Программу можно изменить так, чтобы она вызывала функцию sendEmail не напрямую, а принимала её как параметр:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import sendEmail from './emailSender.js';
+
+// Ставим значение по умолчанию, чтобы не пришлось постоянно указывать функцию
+const registerUser = (params, send = sendEmail) =&gt; {
+  const user = new User(params);
+  if (user.save()) {
+    send('registration', { user });
+    return true;
+  }
+  return false;
+}
+</code></pre></div></div>
+
+<p>Тест:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const fakeSendEmail = (...args) =&gt; {
+  /* Например письмо можно вывести в лог для удобства отладки */
+};
+
+test('registerUser', () =&gt; {
+  const id = registerUser({ name: 'Mike' }, fakeSendEmail);
+  const user = User.find(id)
+  expect(user).toHaveProperty('name', 'Mike');
+});
+</code></pre></div></div>
+
   </div><a class="u-url" href="/programming/2020/02/20/js-advanced-testing.html" hidden></a>
 </article>
 
