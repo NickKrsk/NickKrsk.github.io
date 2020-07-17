@@ -1,4 +1,143 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-26T14:18:49+07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Мои заметки</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">JS: Продвинутое тестирование, заметки</title><link href="http://localhost:4000/programming/2020/02/20/js-advanced-testing.html" rel="alternate" type="text/html" title=" JS: Продвинутое тестирование, заметки" /><published>2020-02-20T12:55:20+07:00</published><updated>2020-02-20T12:55:20+07:00</updated><id>http://localhost:4000/programming/2020/02/20/js-advanced-testing</id><content type="html" xml:base="http://localhost:4000/programming/2020/02/20/js-advanced-testing.html">&lt;p&gt;Метчер jest для отлова исключений:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-17T17:10:20+07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Мои заметки</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Express JS</title><link href="http://localhost:4000/nodejs/2020/07/13/express-js.html" rel="alternate" type="text/html" title="Express JS" /><published>2020-07-13T12:55:20+07:00</published><updated>2020-07-13T12:55:20+07:00</updated><id>http://localhost:4000/nodejs/2020/07/13/express-js</id><content type="html" xml:base="http://localhost:4000/nodejs/2020/07/13/express-js.html">&lt;p&gt;&lt;strong&gt;Тестирование&lt;/strong&gt;
+Supertest — это библиотека, созданная исключительно с целью проводить функциональное тестирование http интерфейса.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// __tests__/app.test.js
+import request from 'supertest';
+import app from '../src/app.js';
+
+test('request', async () =&amp;gt; {
+  const res = await request(app).get('/');
+  if (res.error) {
+    throw error;
+  }
+  expect(res.status).toBe(200);
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;В основе библиотeки supertest лежит другая библиотека - superagent. Именно она позволяет формировать произвольные запросы к серверу.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import request from 'superagent';
+
+const res = await request
+   .post('/api/pet')
+   .type('form')
+   .send({ name: 'Manny', species: 'cat' })
+   .set('X-API-Key', 'foobar')
+   .set('Accept', 'application/json');
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;https://github.com/visionmedia/superagent
+https://github.com/visionmedia/supertest&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Логирование&lt;/strong&gt;
+Правильная отладка — это хорошо настроенное логирование.&lt;/p&gt;
+
+&lt;p&gt;В javascript особой популярностью пользуется библиотека morgan.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import Express from 'express';
+import morgan from 'morgan';
+
+const app = new Express();
+const logger = morgan('combined');
+app.use(logger);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;https://github.com/expressjs/morgan&lt;/p&gt;
+
+&lt;p&gt;Так сложилось, что 99% самых популярных библиотек на js уже поставляются со встроенным логированием через debug. По сути, нам не очень-то и оставили выбор. На картинке выше как раз видно кусок лога express.
+https://github.com/visionmedia/debug#readme&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Интеграция pug с express:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://pugjs.org/api/getting-started.html&quot;&gt;Шаблонизатор PUG&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// npm install pug
+app.set('view engine', 'pug');
+
+app.get('/', (req, res) =&amp;gt; {
+  const data = { title: 'Hey', message: 'Hello there!' };
+  res.render('index', data);
+})
+// index.pug
+html
+  head
+    title= title
+  body
+    h1= message
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Шаблоны и чистота&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Ни в коем случае шаблон не должен порождать побочных эффектов. В шаблоне нельзя писать в базу, изменять данные на диске и вообще любым способом пытаться влиять на окружающую среду. &lt;strong&gt;Шаблон это исключительно чтение.&lt;/strong&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Шаблоны должны быть декларативны, никакого изменения состояний, другими словами, если вы начинаете внутри шаблона вводить переменные и изменять их, то, по сути, шаблон превращается в полноценный скрипт, который вы программируете. Не допускайте этого.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Использовать логику, влияющую на вывод внутри шаблона — это нормально. Если у вас, с точки зрения ui, блок показывается по определённому условию, то вы не сможете этого избежать, единственное о чем нужно помнить, это создавать вовремя правильные абстракции (функции) для избежания дублирования, а так же для выделения бизнес-правил.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Технологии&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;REST&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Требование REST:&lt;/p&gt;
+
+&lt;p&gt;Единообразие интерфейса&lt;/p&gt;
+
+&lt;p&gt;Кэширование&lt;/p&gt;
+
+&lt;p&gt;Отсутствие состояния&lt;/p&gt;
+
+&lt;p&gt;Клиент-серверная архитектура&lt;/p&gt;
+
+&lt;p&gt;Слои&lt;/p&gt;
+
+&lt;p&gt;Код по требованию (необязательное ограничение)&lt;/p&gt;
+
+&lt;p&gt;Дейстие в REST определяется глаголом (GET, POST, DELETE …)&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;JSONAPI&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://jsonapi.org/&quot;&gt;JSONAPI&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Middleware&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/senchalabs/connect&quot;&gt;Connect&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;connect - ядро микрофреймворка express.&lt;/p&gt;
+
+&lt;p&gt;Connect представляет из себя механизм, который расширяется функциями, называемыми middleware. Каждый раз, когда мы используем use, очередная middleware добавляется в общую очередь. В конечном счёте получается объект, наполненный мидлварами. Каждый запрос, отправляемый на обработку в connect, проходит через цепочку этих middleware пока не наткнётся на терминальную мидлвару.&lt;/p&gt;
+
+&lt;p&gt;В свою очередь каждая мидлвара принимает на вход три параметра: request, response и next. Она может поменять их и в конце должна вызвать next для передачи управления следующей по списку мидлваре. В этом и заключается вся мощь микрофреймворков. Удачный дизайн позволяет легко разбивать систему на модули-мидлвары и расширять за счёт мидлвар, которые, в большом количестве, пишут сторонние разработчики.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;app.use((req, res, next) =&amp;gt; {
+  req.newProperty = 'hello from my middleware';
+  next();
+});
+
+// вызов methodOverride возвращает функцию вида (req, res, next) =&amp;gt; ...
+app.use(methodOverride('_method'));
+В Connect нет ничего кроме метода use добавляющего очередную мидлвару в стек.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Mount middleware&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Самое интересное в Connect, что обработчики конкретных маршрутов — это тоже, всего навсего, мидлвары. Их особенностью является привязка к конкретному маршруту, в отличие от мидлвар, которые выполняются для всех запросов.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;app.use('/foo', (req, res, next) =&amp;gt; {
+  // req.url starts with &quot;/foo&quot;
+  next();
+});
+
+app.use('/bar', (req, res, next) =&amp;gt; {
+  // req.url starts with &quot;/bar&quot;
+  next();
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Такие мидлвары позволяют реализовывать базовый роутинг без привязки к конкретному глаголу http и без поддержки динамических маршрутов. В Express роутинг реализован без привязки к Mount Middlewares.&lt;/p&gt;</content><author><name></name></author><summary type="html">Тестирование Supertest — это библиотека, созданная исключительно с целью проводить функциональное тестирование http интерфейса.</summary></entry><entry><title type="html">JS: Продвинутое тестирование, заметки</title><link href="http://localhost:4000/programming/2020/02/20/js-advanced-testing.html" rel="alternate" type="text/html" title=" JS: Продвинутое тестирование, заметки" /><published>2020-02-20T12:55:20+07:00</published><updated>2020-02-20T12:55:20+07:00</updated><id>http://localhost:4000/programming/2020/02/20/js-advanced-testing</id><content type="html" xml:base="http://localhost:4000/programming/2020/02/20/js-advanced-testing.html">&lt;p&gt;Метчер jest для отлова исключений:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;test('boom!', () =&amp;gt; {
   expect(() =&amp;gt; {
@@ -81,7 +220,34 @@ test('registerUser', () =&amp;gt; {
   const user = User.find(id)
   expect(user).toHaveProperty('name', 'Mike');
 });
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Метчер jest для отлова исключений:</summary></entry><entry><title type="html">Курс «JS: Автоматическое тестирование», заметки</title><link href="http://localhost:4000/programming/2020/01/29/js-testing.html" rel="alternate" type="text/html" title=" Курс «JS: Автоматическое тестирование», заметки" /><published>2020-01-29T12:55:20+07:00</published><updated>2020-01-29T12:55:20+07:00</updated><id>http://localhost:4000/programming/2020/01/29/js-testing</id><content type="html" xml:base="http://localhost:4000/programming/2020/01/29/js-testing.html">&lt;p&gt;У обычных утверждений есть мощная альтернатива: &lt;a href=&quot;https://github.com/power-assert-js/power-assert&quot;&gt;power-assert&lt;/a&gt;. Эта библиотека добавляет магию в привычный инструмент.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;манкипатчинг&quot;&gt;Манкипатчинг&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/nock/nock&quot;&gt;nock&lt;/a&gt; - библиотека для перехвата сетевых запросов. Эта библиотека работает так. Она берет стандартный модуль Node.js http и заменяет внутри него некоторые методы, которые используются разными библиотеками для выполнения HTTP-запросов. Причём не просто заменяет, а позволяет гибко настраивать то, какие запросы и как перехватывать, какие возвращать данные, заголовки и коды ответа.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import nock from nock;
+import { getPrivateForkNames } from '../src.js'; 
+
+test('getPrivateForkNames', async () =&amp;gt; {
+  nock(/api\.github\.com/)
+    .log(console.log) // для удобства отладки можно удалить, если не нужно
+    // get – для GET-запросов, post – для POST-запросов и так далее
+    .get(/\/orgs\/hexlet\/repos/)
+    .reply(200, [{ fork: true, name: 'one' }, { fork: false, name: 'second' }]);
+
+  const names = await getPrivateForkNames('hexlet');
+  expect(names).toEqual(['one']);
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;У Nock есть метод, запрещающий любые HTTP-запросы из кода: nock.disableNetConnect(). Рекомендуется вызывать его в начале файла с тестами для предотвращения случайных запросов.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/nettofarah/axios-vcr&quot;&gt;Кассеты для Axios&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;моки-и-стабы&quot;&gt;Моки и стабы&lt;/h1&gt;
+
+&lt;p&gt;Стаб устраняет побочный эффект, чтобы не мешать проверке результата работы кода, например, возврату данных из функции. Мок фокусируется на том, как конкретно работает код, что он делает внутри. При этом чисто технически мок и стаб создаются одинаково, за исключением того, что на мок вешают ожидания, проверяющие вызовы. Это приводит к путанице, потому что часто моками называют стабы. С этим ничего уже не поделать, но для себя всегда пытайтесь понять, о чём идет речь. Это важно, от этого зависит фокус тестов.&lt;/p&gt;</content><author><name></name></author><summary type="html">Метчер jest для отлова исключений:</summary></entry><entry><title type="html">Курс «JS: Автоматическое тестирование», заметки</title><link href="http://localhost:4000/programming/2020/01/29/js-testing.html" rel="alternate" type="text/html" title=" Курс «JS: Автоматическое тестирование», заметки" /><published>2020-01-29T12:55:20+07:00</published><updated>2020-01-29T12:55:20+07:00</updated><id>http://localhost:4000/programming/2020/01/29/js-testing</id><content type="html" xml:base="http://localhost:4000/programming/2020/01/29/js-testing.html">&lt;p&gt;У обычных утверждений есть мощная альтернатива: &lt;a href=&quot;https://github.com/power-assert-js/power-assert&quot;&gt;power-assert&lt;/a&gt;. Эта библиотека добавляет магию в привычный инструмент.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Jest - фраймворк для запуска тестов&lt;/strong&gt;&lt;/p&gt;
 
